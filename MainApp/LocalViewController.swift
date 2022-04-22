@@ -9,6 +9,8 @@ import UIKit
 
 class LocalViewController: UIViewController {
     
+    let charactersOdrManager: ResourceManager = ResourceManager(tag: "characters")
+    
     var scrollView: UIScrollView!
     var stackView: UIStackView!
     
@@ -54,14 +56,18 @@ class LocalViewController: UIViewController {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
         
         let localAssetLabel = makeLabels(text: "MainApp - always available")
         let londonImage = makeImageView(imageName: "london")!
         let sgImage = makeImageView(imageName: "singapore")!
         
-        let subviews = [localAssetLabel, londonImage, sgImage]
+        let releaseOdrButton = UIButton(type: .roundedRect)
+        releaseOdrButton.setTitle("Release On-Demand Resources", for: .normal)
+        releaseOdrButton.addTarget(self, action: #selector(handleRelease), for: .touchUpInside)
+        
+        let subviews = [localAssetLabel, londonImage, sgImage, releaseOdrButton]
         for v in subviews {
             stackView.addArrangedSubview(v)
         }
@@ -76,7 +82,13 @@ class LocalViewController: UIViewController {
     }
     @objc func showOdrVC() {
         let odrVC = OnDemandViewController()
+        odrVC.resourceManager = charactersOdrManager
+        
         navigationController?.pushViewController(odrVC, animated: true)
+    }
+    
+    @objc func handleRelease() {
+        charactersOdrManager.purgeResource()
     }
     
     private func makeLabels(text: String) -> UILabel {

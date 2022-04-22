@@ -8,9 +8,14 @@
 import UIKit
 
 class OnDemandViewController: UIViewController {
+    
+    var resourceManager: ResourceManager?
+    
     let resourceRequest: NSBundleResourceRequest = NSBundleResourceRequest(tags: Set(["characters"]))
     var scrollView: UIScrollView!
     var stackView: UIStackView!
+    var topImageView: UIImageView!
+    var bottomImageView: UIImageView!
     
     lazy var contentView: UIView = {
         let view = UIView()
@@ -21,34 +26,34 @@ class OnDemandViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        preloadResourceWithTag()
     }
 
-    func preloadResourceWithTag(tagArray: [String]) {
-        resourceRequest.conditionallyBeginAccessingResources { [weak self] isAvailable in
-            if isAvailable {
-                DispatchQueue.main.async {
-                    self?.showCharacters()
-                }
-            } else {
-                self?.resourceRequest.beginAccessingResources(completionHandler: { error in
-                    if let error = error {
-                        print("Resource not available: \(error)")
-                    } else {
-                        DispatchQueue.main.async {
-                            self?.showCharacters()
-                        }
-                    }
-                })
-            }
+    func preloadResourceWithTag() {
+        
+        guard let resourceManager = resourceManager else {
+            return
         }
+
+        resourceManager.requestResourceWith(onSuccess: { [weak self] in
+            DispatchQueue.main.async {
+                self?.showCharacters()
+            }
+        }, onFailure: { error in
+            print("Resource not available: \(error)")
+        })
     }
     
     private func showCharacters() {
-        
+        guard let thorImage = UIImage(named: "thor"), let walleImage = UIImage(named: "walle") else {
+            return
+        }
+        topImageView.image = thorImage
+        bottomImageView.image = walleImage
     }
     
     private func setupViews() {
-        title = "ODR"
+        title = "On-Demand"
         view.backgroundColor = .white
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +72,7 @@ class OnDemandViewController: UIViewController {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 12
-        stackView.backgroundColor = .yellow
+        stackView.backgroundColor = .orange
         contentView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
@@ -84,27 +89,20 @@ class OnDemandViewController: UIViewController {
         ])
 
         
-        let localAssetLabel = makeLabels(text: "MainApp - always available")
-        let thorImage = makeImageView(imageName: "placeholder")!
         let onDemandLabel = makeLabels(text: "MainApp - on demand")
-        let walleImage = makeImageView(imageName: "placeholder")!
+        topImageView = makeImageView(imageName: "placeholder")!
+        bottomImageView = makeImageView(imageName: "placeholder")!
         
-        let subviews = [localAssetLabel, thorImage, onDemandLabel, walleImage]
+        let subviews = [onDemandLabel, topImageView, bottomImageView]
         for v in subviews {
-            stackView.addArrangedSubview(v)
+            stackView.addArrangedSubview(v ?? UIView())
         }
         
         NSLayoutConstraint.activate([
-            thorImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
-            walleImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
+            topImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
+            bottomImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
         ])
-        
     }
-    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        scrollView.contentSize = view.frame.size
-//    }
     
     private func makeLabels(text: String) -> UILabel {
         let label = UILabel()
