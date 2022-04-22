@@ -85,9 +85,9 @@ class OnDemandViewController: UIViewController {
 
         
         let localAssetLabel = makeLabels(text: "MainApp - always available")
-        let thorImage = makeImageView(imageName: "dc")!
+        let thorImage = makeImageView(imageName: "placeholder")!
         let onDemandLabel = makeLabels(text: "MainApp - on demand")
-        let walleImage = makeImageView(imageName: "dc")!
+        let walleImage = makeImageView(imageName: "placeholder")!
         
         let subviews = [localAssetLabel, thorImage, onDemandLabel, walleImage]
         for v in subviews {
@@ -134,7 +134,7 @@ class OnDemandViewController: UIViewController {
         }
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         
         return imageView

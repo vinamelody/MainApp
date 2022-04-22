@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LocalViewController.swift
 //  MainApp
 //
 //  Created by Vina Rianti on 20/4/22.
@@ -7,9 +7,8 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LocalViewController: UIViewController {
     
-    let resourceRequest: NSBundleResourceRequest = NSBundleResourceRequest(tags: Set(["characters"]))
     var scrollView: UIScrollView!
     var stackView: UIStackView!
     
@@ -22,30 +21,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-    }
-
-    func preloadResourceWithTag(tagArray: [String]) {
-        resourceRequest.conditionallyBeginAccessingResources { [weak self] isAvailable in
-            if isAvailable {
-                DispatchQueue.main.async {
-                    self?.showCharacters()
-                }
-            } else {
-                self?.resourceRequest.beginAccessingResources(completionHandler: { error in
-                    if let error = error {
-                        print("Resource not available: \(error)")
-                    } else {
-                        DispatchQueue.main.async {
-                            self?.showCharacters()
-                        }
-                    }
-                })
-            }
-        }
-    }
-    
-    private func showCharacters() {
-        
     }
     
     private func setupViews() {
@@ -66,7 +41,6 @@ class ViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = 12
         stackView.backgroundColor = .yellow
         contentView.addSubview(stackView)
         
@@ -84,18 +58,17 @@ class ViewController: UIViewController {
         ])
         
         let localAssetLabel = makeLabels(text: "MainApp - always available")
-        let thorImage = makeImageView(imageName: "dc")!
-        let onDemandLabel = makeLabels(text: "MainApp - on demand")
-        let walleImage = makeImageView(imageName: "dc")!
+        let londonImage = makeImageView(imageName: "london")!
+        let sgImage = makeImageView(imageName: "singapore")!
         
-        let subviews = [localAssetLabel, thorImage, onDemandLabel, walleImage]
+        let subviews = [localAssetLabel, londonImage, sgImage]
         for v in subviews {
             stackView.addArrangedSubview(v)
         }
         
         NSLayoutConstraint.activate([
-            thorImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
-            walleImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
+            londonImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
+            sgImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
         ])
         
         let odrButton = UIBarButtonItem(title: "On-Demand", style: .plain, target: self, action: #selector(showOdrVC))
@@ -134,7 +107,7 @@ class ViewController: UIViewController {
         }
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         
         return imageView
