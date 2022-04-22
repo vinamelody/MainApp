@@ -1,14 +1,13 @@
 //
-//  ViewController.swift
+//  OnDemandViewController.swift
 //  MainApp
 //
-//  Created by Vina Rianti on 20/4/22.
+//  Created by Vina Rianti on 21/4/22.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
-    
+class OnDemandViewController: UIViewController {
     let resourceRequest: NSBundleResourceRequest = NSBundleResourceRequest(tags: Set(["characters"]))
     var scrollView: UIScrollView!
     var stackView: UIStackView!
@@ -49,7 +48,8 @@ class ViewController: UIViewController {
     }
     
     private func setupViews() {
-        title = "Local"
+        title = "ODR"
+        view.backgroundColor = .white
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -82,6 +82,7 @@ class ViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
+
         
         let localAssetLabel = makeLabels(text: "MainApp - always available")
         let thorImage = makeImageView(imageName: "dc")!
@@ -98,13 +99,12 @@ class ViewController: UIViewController {
             walleImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
         ])
         
-        let odrButton = UIBarButtonItem(title: "On-Demand", style: .plain, target: self, action: #selector(showOdrVC))
-        navigationItem.rightBarButtonItem = odrButton
     }
-    @objc func showOdrVC() {
-        let odrVC = OnDemandViewController()
-        navigationController?.pushViewController(odrVC, animated: true)
-    }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        scrollView.contentSize = view.frame.size
+//    }
     
     private func makeLabels(text: String) -> UILabel {
         let label = UILabel()
@@ -140,4 +140,3 @@ class ViewController: UIViewController {
         return imageView
     }
 }
-

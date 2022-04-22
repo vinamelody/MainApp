@@ -1,0 +1,16 @@
+PODS:
+  - NetworkingLibrary (0.1.0)
+
+DEPENDENCIES:
+  - NetworkingLibrary (from `NetworkingLibrary`)
+
+EXTERNAL SOURCES:
+  NetworkingLibrary:
+    :path: NetworkingLibrary
+
+SPEC CHECKSUMS:
+  NetworkingLibrary: ce2cb1cd0504f0f901622bb7fd5f2b02d77e0809
+
+PODFILE CHECKSUM: 1a92e41b0268852c9d99cc78ea7019a72fe6c7c4
+
+COCOAPODS: 1.11.3
