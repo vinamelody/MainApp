@@ -1,16 +1,16 @@
 PODS:
-  - NetworkingLibrary (0.1.0)
+  - CharactersLibrary (0.1.0)
 
 DEPENDENCIES:
-  - NetworkingLibrary (from `NetworkingLibrary`)
+  - CharactersLibrary (from `CharactersLibrary`)
 
 EXTERNAL SOURCES:
-  NetworkingLibrary:
-    :path: NetworkingLibrary
+  CharactersLibrary:
+    :path: CharactersLibrary
 
 SPEC CHECKSUMS:
-  NetworkingLibrary: ce2cb1cd0504f0f901622bb7fd5f2b02d77e0809
+  CharactersLibrary: a4b2a6cf79c078e2d7866d59b10c3e5dc9d981ab
 
-PODFILE CHECKSUM: 1a92e41b0268852c9d99cc78ea7019a72fe6c7c4
+PODFILE CHECKSUM: 908f13506c2f2c81a9c375644ac8b7509594faf5
 
 COCOAPODS: 1.11.3

@@ -9,7 +9,7 @@ target 'MainApp' do
   # use_frameworks!
 
   # Pods for MainApp
-  pod 'NetworkingLibrary', :path => 'NetworkingLibrary'
+  pod 'CharactersLibrary', :path => 'CharactersLibrary'
 
   target 'MainAppTests' do
     inherit! :search_paths
@@ -22,7 +22,7 @@ target 'MainApp' do
 
 end
 
-target 'NetworkingLibrary_Example' do
-  project 'NetworkingLibrary/Example/NetworkingLibrary'
-  pod 'NetworkingLibrary', :path => 'NetworkingLibrary'
+target 'CharactersLibrary_Example' do
+  project 'CharactersLibrary/Example/CharactersLibrary'
+  pod 'CharactersLibrary', :path => 'CharactersLibrary'
 end

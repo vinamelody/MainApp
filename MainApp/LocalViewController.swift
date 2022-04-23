@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CharactersLibrary
 
 class LocalViewController: UIViewController {
     
@@ -67,7 +68,11 @@ class LocalViewController: UIViewController {
         releaseOdrButton.setTitle("Release On-Demand Resources", for: .normal)
         releaseOdrButton.addTarget(self, action: #selector(handleRelease), for: .touchUpInside)
         
-        let subviews = [localAssetLabel, londonImage, sgImage, releaseOdrButton]
+        let charactersButton = UIButton(type: .roundedRect)
+        charactersButton.setTitle("Show Characters", for: .normal)
+        charactersButton.addTarget(self, action: #selector(handleShowCharacters), for: .touchUpInside)
+        
+        let subviews = [localAssetLabel, londonImage, sgImage, releaseOdrButton, charactersButton]
         for v in subviews {
             stackView.addArrangedSubview(v)
         }
@@ -80,6 +85,12 @@ class LocalViewController: UIViewController {
         let odrButton = UIBarButtonItem(title: "On-Demand", style: .plain, target: self, action: #selector(showOdrVC))
         navigationItem.rightBarButtonItem = odrButton
     }
+    
+    @objc func handleShowCharacters() {
+        let vc = CharactersViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc func showOdrVC() {
         let odrVC = OnDemandViewController()
         odrVC.resourceManager = charactersOdrManager
