@@ -11,7 +11,7 @@ class OnDemandViewController: UIViewController {
     
     var resourceManager: ResourceManager?
     
-    let resourceRequest: NSBundleResourceRequest = NSBundleResourceRequest(tags: Set(["characters"]))
+    let resourceRequest: NSBundleResourceRequest = NSBundleResourceRequest(tags: Set(["characters", "heroes"]))
     var scrollView: UIScrollView!
     var stackView: UIStackView!
     var topImageView: UIImageView!
